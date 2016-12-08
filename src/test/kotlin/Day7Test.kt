@@ -14,7 +14,7 @@ class Day7Test {
 
   @Test
   fun solution() {
-    val input = Resources.toString(Resources.getResource("day7input.txt"), Charsets.UTF_8)
+    val input = Resources.toString(Resources.getResource("day7.txt"), Charsets.UTF_8)
 
     assertEquals(110, input.split('\n')
         .map { Day7.address(it) }
@@ -32,7 +32,7 @@ class Day7Test {
 
   @Test
   fun solutionPart2() {
-    val input = Resources.toString(Resources.getResource("day7input.txt"), Charsets.UTF_8)
+    val input = Resources.toString(Resources.getResource("day7.txt"), Charsets.UTF_8)
 
     assertEquals(242, input.split('\n')
         .map { Day7.address(it) }
