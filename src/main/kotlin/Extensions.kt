@@ -53,6 +53,9 @@ fun <T> Iterable<T>.chunk(size: Int): Iterable<Iterable<T>> {
   return results
 }
 
+fun <T> List<T>.window(width: Int): List<List<T>> =
+    if (size < width) emptyList() else listOf(take(width)).plus(drop(1).window(width))
+
 // Since this has come up multiple times in the puzzles...
 fun Iterable<Char>.charCounts(): Map<Char, Int> {
   return fold(HashMap<Char, Int>(), { charCount, char ->
