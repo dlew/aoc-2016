@@ -1132,11 +1132,14 @@ oxmeeuruqp-omzpk-oamfuzs-efadmsq-716[meoua]
 xjinphzm-bmvyz-hvbizodx-xviyt-xjvodib-ozxcijgjbt-343[ixbjv]
 jyfvnlupj-ibuuf-svnpzapjz-851[gmsnf]""".trimMargin()
 
-    val answer = input.split('\n')
+    val realRooms = input.split('\n')
         .map { Day4.parseRoom(it) }
         .filter { it.isReal() }
-        .fold(0, { sum, room -> sum + room.id })
+
+    val answer = realRooms.fold(0, { sum, room -> sum + room.id })
 
     assertEquals(409147, answer)
+
+    realRooms.forEach { println("${it.decrypt()}: ${it.id}") }
   }
 }
