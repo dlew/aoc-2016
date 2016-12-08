@@ -6,6 +6,29 @@ inline fun <T, R> Iterable<T>.scan(initial: R, operation: (R, T) -> R): Iterable
   return results
 }
 
+fun <T, R> Sequence<T>.scan(initial: R, operation: (R, T) -> R): Sequence<R>
+    = ScanningSequence(this, initial, operation)
+
+internal class ScanningSequence<T, R>
+constructor(private val sequence: Sequence<T>,
+            private val initial: R,
+            private val operation: (R, T) -> R) : Sequence<R> {
+
+  override fun iterator(): Iterator<R> = object : Iterator<R> {
+    val iterator = sequence.iterator()
+    var state = initial
+
+    override fun next(): R {
+      state = operation(state, iterator.next())
+      return state
+    }
+
+    override fun hasNext(): Boolean {
+      return iterator.hasNext()
+    }
+  }
+}
+
 fun <T> Iterable<Iterable<T>>.transpose(): List<List<T>> {
   val results = ArrayList<MutableList<T>>()
   forEach { list ->
