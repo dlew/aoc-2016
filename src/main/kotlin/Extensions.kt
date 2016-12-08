@@ -52,3 +52,11 @@ fun <T> Iterable<T>.chunk(size: Int): Iterable<Iterable<T>> {
   }
   return results
 }
+
+// Since this has come up multiple times in the puzzles...
+fun Iterable<Char>.charCounts(): Map<Char, Int> {
+  return fold(HashMap<Char, Int>(), { charCount, char ->
+    charCount.put(char, charCount.getOrDefault(char, 0) + 1)
+    charCount
+  })
+}
