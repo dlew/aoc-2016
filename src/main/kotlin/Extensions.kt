@@ -63,3 +63,23 @@ fun Iterable<Char>.charCounts(): Map<Char, Int> {
     charCount
   })
 }
+
+// A not-particularly-efficient combinations algorithm
+fun <T> Collection<T>.combinations(n: Int): Collection<List<T>> {
+  if (n == 0) {
+    return listOf(emptyList())
+  }
+
+  if (size == 0) {
+    return emptyList()
+  }
+
+  // Not strictly necessary, but a nice short-circuit
+  if (n > size) {
+    return emptyList()
+  }
+
+  val x = first()
+  val xs = drop(1)
+  return xs.combinations(n) + xs.combinations(n - 1).map { it.plus(x) }
+}
