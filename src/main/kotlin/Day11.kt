@@ -43,8 +43,7 @@ class Day11 {
 
     fun isSolved() = floors.take(floors.size - 1).filter { it.isNotEmpty() }.isEmpty()
 
-    fun isValid() = elevator >= 0 && elevator < floors.size
-        && floors.fold(true, { valid, floor -> valid && validFloor(floor) })
+    fun validFloor(floor: Int) = validFloor(floors[floor])
 
     private fun validFloor(floor: Set<Item>): Boolean {
       // No generators == valid floor, guaranteed
@@ -89,7 +88,7 @@ class Day11 {
         val possibilities = statesAtLastStep
             .flatMap { generatePossibilities(it) }
             .toSet()
-            .filter { !visited.contains(it) && it.isValid() }
+            .filter { !visited.contains(it) }
 
         // Check if we found a solution
         possibilities.filter { it.isSolved() }.firstOrNull()?.let {
@@ -122,9 +121,11 @@ class Day11 {
 
         // Move one up
         possibilities += moveOne.map { item -> newState.withMove(item, elevator, elevator + 1) }
+            .filter { it.validFloor(elevator) && it.validFloor(elevator + 1) }
 
         // Move two up (if there are two)
         possibilities += moveTwo.map { items -> newState.withMoves(items, elevator, elevator + 1) }
+            .filter { it.validFloor(elevator) && it.validFloor(elevator + 1) }
       }
 
       // Moving items down
@@ -133,9 +134,11 @@ class Day11 {
 
         // Move one down
         possibilities += moveOne.map { item -> newState.withMove(item, elevator, elevator - 1) }
+            .filter { it.validFloor(elevator) && it.validFloor(elevator - 1) }
 
         // Move two down (if there are two)
         possibilities += moveTwo.map { items -> newState.withMoves(items, elevator, elevator - 1) }
+            .filter { it.validFloor(elevator) && it.validFloor(elevator - 1) }
       }
 
       return possibilities
