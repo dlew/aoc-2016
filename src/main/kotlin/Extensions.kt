@@ -42,7 +42,7 @@ fun <T> Iterable<Iterable<T>>.transpose(): List<List<T>> {
   return results
 }
 
-fun <T> Iterable<T>.chunk(size: Int): Iterable<Iterable<T>> {
+fun <T> Iterable<T>.chunk(size: Int): Iterable<List<T>> {
   val results = ArrayList<MutableList<T>>()
   forEachIndexed { i, item ->
     if (i % size == 0) {
