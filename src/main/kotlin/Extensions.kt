@@ -1,3 +1,5 @@
+import org.apache.commons.codec.binary.Hex
+import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 inline fun <T, R> Iterable<T>.scan(initial: R, operation: (R, T) -> R): Iterable<R> {
@@ -83,3 +85,5 @@ fun <T> Collection<T>.combinations(n: Int): Collection<List<T>> {
   val xs = drop(1)
   return xs.combinations(n) + xs.combinations(n - 1).map { it.plus(x) }
 }
+
+fun String.md5(toLowerCase: Boolean = false) = Hex.encodeHex(DigestUtils.md5(this), toLowerCase).joinToString("")
