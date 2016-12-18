@@ -55,6 +55,14 @@ fun <T> Iterable<T>.chunk(size: Int): Iterable<List<T>> {
   return results
 }
 
+fun <T> List<T>.slidingWindow(size: Int): Iterable<List<T>> {
+  val results = ArrayList<List<T>>()
+  (0..this.size - size).forEach {
+    results.add(this.subList(it, it + size))
+  }
+  return results
+}
+
 fun <T> List<T>.window(width: Int): List<List<T>> =
     if (size < width) emptyList() else listOf(take(width)).plus(drop(1).window(width))
 
